@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
-const db = require('./models')
+
+const db = require('./models');
+const definitionRouter = require("./routes/definition.routes");
 
 const app = express();
 
@@ -17,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // sync the db model with the database
-db.sequelize.sync({ force: true })
+db.sequelize.sync()
   .then(() => {
     console.log("Synced db.");
   })
@@ -30,7 +32,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to Quitionary API." });
 })
 
-require("./routes/tutorial.routes")(app);
+app.use('/api/definitions', definitionRouter);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

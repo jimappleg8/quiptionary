@@ -1,0 +1,23 @@
+POST http://localhost:8080/api/definitions
+Content-Type: application/json
+
+{
+    "entry_word": "tradition",
+    "part_of_speech": "n.",
+    "plural": false,
+    "definition": "Peer pressure from dead people.",
+    "original_quote": "",
+    "author": "Jesse Applegate",
+    "verified": false,
+    "source_id": "",
+    "source_date": "20221003",
+    "source_description": "",
+    "other_sources": "",
+    "definition_type": "",
+    "keywords": "",
+    "categories": "",
+    "source": "",
+    "context": "",
+    "sort": "tradition",
+    "game": "N"
+}
