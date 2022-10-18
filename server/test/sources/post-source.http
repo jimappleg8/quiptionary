@@ -1,0 +1,11 @@
+POST http://localhost:8080/api/sources
+Content-Type: application/json
+
+{
+    "verified": false,
+    "source_date": "20321003",
+    "description": "",
+    "citation": "Applegate, Jesse. The Wise Words of JM Applegate. MIT Press, 2032.",
+    "author": "Jesse Applegate",
+    "source": ""
+}

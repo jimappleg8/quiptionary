@@ -3,14 +3,23 @@ const cors = require('cors');
 
 const db = require('./models');
 const definitionRouter = require("./routes/definition.routes");
+const definitionIndexRouter = require("./routes/definition_index.routes");
+const sourceRouter = require("./routes/source.routes");
 
 const app = express();
 
 let corsOptions = {
-  origin: "http://localhost:8081"
+  origin: ["http://localhost:3000", "http://localhost:8081"]
 }
 
 app.use(cors(corsOptions));
+
+/*
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000")
+  res.header("Access-Control-Allow-Origin", "http://localhost:8081")
+})
+*/
 
 // parse requests of content-type - application/json
 app.use(express.json());
@@ -33,6 +42,8 @@ app.get("/", (req, res) => {
 })
 
 app.use('/api/definitions', definitionRouter);
+app.use('/api/definition-index', definitionIndexRouter);
+app.use('/api/sources', sourceRouter);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

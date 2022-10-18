@@ -11,9 +11,9 @@ function App() {
   });
   
   const onSearch = async(text) => {
-    const results = await DefinitionSource.get("/", {
-      params: {words: text}
-    })
+    const url = '/definitions/search/' + encodeURIComponent(text);
+
+    const results = await DefinitionSource.get(url)
     setState(prevState => {
       return{...prevState, results: results}
     })

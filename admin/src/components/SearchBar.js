@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
 
 const SearchBar = (props) => {
   const { onSearch } = props;
@@ -17,11 +19,15 @@ const SearchBar = (props) => {
   }
   
   return (
-    <div>
-      <div className="control">
-        <input className="input is-medium" onChange={handleInput} onKeyPress={handleEnterKeyPressed} type="text" value={searchText} placeholder="Enter a word" />
-      </div>
-    </div>
+    <Container>
+          <Form.Control 
+            type="text" 
+            className="input is-medium"
+            onChange={handleInput}
+            onKeyPress={handleEnterKeyPressed}
+            value={searchText}
+            placeholder="Enter a word" />
+    </Container>
   )
 }
 

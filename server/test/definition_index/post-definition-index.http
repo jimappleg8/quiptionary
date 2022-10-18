@@ -1,0 +1,7 @@
+POST http://localhost:8080/api/definition-index
+Content-Type: application/json
+
+{
+    "definition_id": 10000,
+    "word": "ten-thousand"
+}

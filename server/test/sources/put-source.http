@@ -1,0 +1,6 @@
+PUT http://localhost:8080/api/sources/56
+Content-Type: application/json
+
+{
+    "verified": true
+}

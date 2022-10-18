@@ -39,3 +39,33 @@ ALTER TABLE `definitions` DROP `language`;
 ALTER TABLE `definitions` ADD `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `game`;
 ALTER TABLE `definitions` ADD `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `game`;
 
+--
+-- Changes to definition_index
+--
+
+ALTER TABLE `definition_index` DROP `id`;
+ALTER TABLE `definition_index` DROP `weight`;
+
+--
+-- Changes to sources
+--
+
+ALTER TABLE `sources` ADD `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `source`;
+ALTER TABLE `sources` ADD `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `createdAt`;
+
+ALTER TABLE `sources` ADD `verified2` TINYINT(1) NOT NULL DEFAULT '0' AFTER `verified`;
+ALTER TABLE `sources` DROP `verified`;
+ALTER TABLE `sources` CHANGE `verified2` `verified` TINYINT(1) NOT NULL DEFAULT '0';
+
+--
+-- Making the definition_source table
+-- 
+
+CREATE TABLE definition_source AS SELECT id AS definition_id, source_id FROM `definitions` WHERE source_id <> '';
+
+-- (then I modified it to change the source ID to a number)
+
+
+
+
+

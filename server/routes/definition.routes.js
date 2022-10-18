@@ -7,7 +7,8 @@ const router = express.Router();
 router.post("/", definitions.createDefinition);
 router.put("/:id", definitions.updateDefinition);
 router.delete("/:id", definitions.deleteDefinition);
-router.get("/", definitions.getDefinitions);
+router.get("/index-definitions", definitions.indexDefinitions);
+router.get("/search/:word", definitions.searchDefinitions);
 router.get("/:id", definitions.getDefinitionById);
 
 module.exports = router
