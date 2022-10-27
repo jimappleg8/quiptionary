@@ -1,6 +1,6 @@
-PUT http://localhost:8080/api/definitions/3454
+PUT http://localhost:8080/api/definitions/3
 Content-Type: application/json
 
 {
-    "game": "Y"
+    "originalQuote": "This is the original quote."
 }

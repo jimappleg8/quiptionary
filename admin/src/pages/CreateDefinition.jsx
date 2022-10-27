@@ -10,23 +10,21 @@ import Form from 'react-bootstrap/Form';
 const DefinitionInsert = () => {
   const initialDefinitionState = {
     id: null,
-    entry_word: "",
-    part_of_speech: "",
+    entryWord: "",
+    partOfSpeech: "",
     plural: 0,
     definition: "",
-    original_quote: "",
-    author: "",
-    verified: 0,
+    originalQuote: "",
+    attributedTo: "",
     source_id: "",
     source_date: "",
     source_description: "",
     other_sources: "",
-    definition_type: "",
+    definitionType: "",
     keywords: "",
     categories: "",
     source: "",
     context: "",
-    sort: "",
     game: ""
   };
   const [definition, setDefinition] = useState(initialDefinitionState);
@@ -43,46 +41,42 @@ const DefinitionInsert = () => {
 
   const saveDefinition = async () => {
     const payload = {
-      entry_word: definition.entry_word,
-      part_of_speech: definition.part_of_speech,
+      entryWord: definition.entryWord,
+      partOfSpeech: definition.partOfSpeech,
       plural: definition.plural,
       definition: definition.definition,
-      original_quote: definition.original_quote,
-      author: definition.author,
-      verified: definition.verified,
+      originalQuote: definition.originalQuote,
+      attributedTo: definition.attributedTo,
       source_id: definition.source_id,
       source_date: definition.source_date,
       source_description: definition.source_description,
       other_sources: definition.other_sources,
-      definition_type: definition.definition_type,
+      definitionType: definition.definitionType,
       keywords: definition.keywords,
       categories: definition.categories,
       source: definition.source,
       context: definition.context,
-      sort: definition.sort,
       game: definition.game
     };
 
-    await api.insert(payload)
+    await api.insertDef(payload)
       .then(response => {
         setDefinition({
-          entry_word: response.data.entry_word,
-          part_of_speech: response.data.part_of_speech,
+          entryWord: response.data.entryWord,
+          partOfSpeech: response.data.partOfSpeech,
           plural: response.data.plural,
           definition: response.data.definition,
-          original_quote: response.data.original_quote,
-          author: response.data.author,
-          verified: response.data.verified,
+          originalQuote: response.data.originalQuote,
+          attributedTo: response.data.attributedTo,
           source_id: response.data.source_id,
           source_date: response.data.source_date,
           source_description: response.data.source_description,
           other_sources: response.data.other_sources,
-          definition_type: response.data.definition_type,
+          definitionType: response.data.definition_type,
           keywords: response.data.keywords,
           categories: response.data.categories,
           source: response.data.source,
           context: response.data.context,
-          sort: response.data.sort,
           game: response.data.game
         });
         setSubmitted(true);
@@ -117,8 +111,8 @@ const DefinitionInsert = () => {
                 <Form.Label>Entry Word</Form.Label>
                 <Form.Control
                   type="text"
-                  name="entry_word"
-                  value={definition.entry_word}
+                  name="entryWord"
+                  value={definition.entryWord}
                   onChange={handleInputChange}
                 />
               </Form.Group>
@@ -127,8 +121,8 @@ const DefinitionInsert = () => {
                 <Form.Label>Part of Speech</Form.Label>
                 <Form.Control
                   type="text"
-                  name="part_of_speech"
-                  value={definition.part_of_speech}
+                  name="partOfSpeech"
+                  value={definition.partOfSpeech}
                   onChange={handleInputChange}
                 />
               </Form.Group>
@@ -157,28 +151,18 @@ const DefinitionInsert = () => {
                 <Form.Label>Original Quote</Form.Label>
                 <Form.Control
                   as="textarea"
-                  name="original_quote"
-                  value={definition.original_quote}
+                  name="originalQuote"
+                  value={definition.originalQuote}
                   onChange={handleInputChange}
                 />
               </Form.Group>
               
-              <Form.Group className="mb-3" controlId="formAuthor">
-                <Form.Label>Author</Form.Label>
+              <Form.Group className="mb-3" controlId="formAttributedTo">
+                <Form.Label>Attributed To</Form.Label>
                 <Form.Control
                   type="text"
-                  name="author"
-                  value={definition.author}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-              
-              <Form.Group className="mb-3" controlId="formVerified">
-                <Form.Label>Verified</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="verified"
-                  value={definition.verified}
+                  name="attributedTo"
+                  value={definition.attributedTo}
                   onChange={handleInputChange}
                 />
               </Form.Group>
@@ -227,8 +211,8 @@ const DefinitionInsert = () => {
                 <Form.Label>Definition Type</Form.Label>
                 <Form.Control
                   type="text"
-                  name="definition_type" 
-                  value={definition.definition_type}
+                  name="definitionType" 
+                  value={definition.definitionType}
                   onChange={handleInputChange}
                 />
               </Form.Group>
@@ -269,16 +253,6 @@ const DefinitionInsert = () => {
                   type="text"
                   name="context"
                   value={definition.context}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-              
-              <Form.Group className="mb-3" controlId="formSort">
-                <Form.Label>Sort String</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="sort"
-                  value={definition.sort}
                   onChange={handleInputChange}
                 />
               </Form.Group>

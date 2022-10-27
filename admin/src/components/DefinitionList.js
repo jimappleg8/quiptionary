@@ -1,9 +1,7 @@
 import React from 'react'
-import { Link } from "react-router-dom";
 import api from '../api'
 import { useTable } from 'react-table'
 import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 
 
@@ -57,7 +55,7 @@ const DefinitionList = ({ results }) => {
     matches = results.data.matches || [];
     related = results.data.related || [];
     related = related.sort((a, b) => {
-      return a.entry_word.localeCompare(b.entry_word, undefined, {sensitivity: 'base'});
+      return a.entryWord.localeCompare(b.entryWord, undefined, {sensitivity: 'base'});
     });
   }
 
@@ -72,7 +70,7 @@ const DefinitionList = ({ results }) => {
         `Do you want to delete the definition ${id} permanently?`,
       )
     ) {
-     await api.remove(id);
+     await api.removeDef(id);
       window.location.reload();
     }
   }
@@ -88,7 +86,7 @@ const DefinitionList = ({ results }) => {
       },
       {
         Header: 'Word',
-        accessor: 'entry_word',
+        accessor: 'entryWord',
         filterable: true,
       },
       {
@@ -97,8 +95,8 @@ const DefinitionList = ({ results }) => {
         filterable: true,
       },
       {
-        Header: 'Author',
-        accessor: 'author',
+        Header: 'Attributed To',
+        accessor: 'attributedTo',
       },
       {
         Header: 'Update',
@@ -135,4 +133,4 @@ const DefinitionList = ({ results }) => {
   )
 }
 
-export default DefinitionList
+export default DefinitionList;

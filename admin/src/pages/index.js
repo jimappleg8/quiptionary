@@ -1,9 +1,9 @@
 import ListDefinitions from './ListDefinitions'
 import CreateDefinition from './CreateDefinition'
-import UpdateDefinition from './UpdateDefinition'
+import UpdateDefinitionApi from './update-definition/UpdateDefinitionApi'
 
 export { 
   ListDefinitions, 
   CreateDefinition, 
-  UpdateDefinition
+  UpdateDefinitionApi
 }

@@ -1,6 +1,6 @@
-PUT http://localhost:8080/api/sources/56
+PUT http://localhost:8080/api/sources/1
 Content-Type: application/json
 
 {
-    "verified": true
+    "notes": "This is a note."
 }

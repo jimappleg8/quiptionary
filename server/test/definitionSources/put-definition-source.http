@@ -1,0 +1,6 @@
+PUT http://localhost:8080/api/definition-source/1/35
+Content-Type: application/json
+
+{
+    "details": "Some details"
+}

@@ -3,7 +3,8 @@ const cors = require('cors');
 
 const db = require('./models');
 const definitionRouter = require("./routes/definition.routes");
-const definitionIndexRouter = require("./routes/definition_index.routes");
+const definitionIndexRouter = require("./routes/definitionIndex.routes");
+const definitionSourceRouter = require("./routes/definitionSource.routes");
 const sourceRouter = require("./routes/source.routes");
 
 const app = express();
@@ -43,6 +44,7 @@ app.get("/", (req, res) => {
 
 app.use('/api/definitions', definitionRouter);
 app.use('/api/definition-index', definitionIndexRouter);
+app.use('/api/definition-source', definitionSourceRouter);
 app.use('/api/sources', sourceRouter);
 
 // set port, listen for requests

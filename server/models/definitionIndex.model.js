@@ -1,8 +1,8 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize, Sequelize) => {
-  const Definition_index = sequelize.define("definition_index", {
-    definition_id: {
+  const DefinitionIndex = sequelize.define("definitionIndex", {
+    definitionId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -16,7 +16,7 @@ module.exports = (sequelize, Sequelize) => {
     timestamps: false
   });
   
-  Definition_index.removeAttribute('id');
+  DefinitionIndex.removeAttribute('id');
 
-  return Definition_index;
+  return DefinitionIndex;
 };

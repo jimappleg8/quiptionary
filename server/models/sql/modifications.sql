@@ -57,15 +57,80 @@ ALTER TABLE `sources` ADD `verified2` TINYINT(1) NOT NULL DEFAULT '0' AFTER `ver
 ALTER TABLE `sources` DROP `verified`;
 ALTER TABLE `sources` CHANGE `verified2` `verified` TINYINT(1) NOT NULL DEFAULT '0';
 
+CREATE TABLE definition_source AS SELECT id AS definition_id, source_id FROM `definitions` WHERE source_id <> '';
+
+--
+-- Modifying the sources table
+--
+
+ALTER TABLE `sources` DROP `verified`;
+ALTER TABLE `sources` MODIFY `source_date` varchar(10) AFTER `author`;
+ALTER TABLE `sources` MODIFY `citation` text AFTER `source_date`;
+ALTER TABLE `sources` CHANGE `source_date` `publishedDate` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `sources` CHANGE `source` `notes` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+--
+-- Modifying the definitions table
+--
+
+ALTER TABLE `definitions` CHANGE `entry_word` `entryWord` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `definitions` CHANGE `part_of_speech` `partOfSpeech` VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `definitions` CHANGE `original_quote` `originalQuote` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `definitions` CHANGE `author` `attributedTo` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE `definitions` DROP `verified`;
+ALTER TABLE `definitions` CHANGE `definition_type` `definitionType` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `definitions` DROP `sort`;
+
 --
 -- Making the definition_source table
 -- 
 
-CREATE TABLE definition_source AS SELECT id AS definition_id, source_id FROM `definitions` WHERE source_id <> '';
+ALTER TABLE `definitionSources` ADD `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `sourceId`;
+ALTER TABLE `definitionSources` ADD `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `createdAt`;
+ALTER TABLE `definitionSources` ADD UNIQUE `definitionSources_sourceId_definitionId_unique` (`definitionId`, `sourceId`);
+ALTER TABLE `definitionSources` ADD PRIMARY KEY (`definitionId`, `sourceId`);
+ALTER TABLE `definitionSources` ADD FOREIGN KEY (`definitionId`) REFERENCES `definitions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `definitionSources` ADD FOREIGN KEY (`sourceId`) REFERENCES `sources` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
--- (then I modified it to change the source ID to a number)
+INSERT INTO definitionSources SELECT id AS definitionId, source_id AS sourceId, createdAt, updatedAt FROM `definitions`;
 
 
+
+--
+-- Fixing the Source IDs
+--
+
+SELECT * FROM `definitions` WHERE source_id LIKE '';
+
+UPDATE `definitions` SET `source_id` = 2 WHERE `other_sources` LIKE '(2)';
+UPDATE `definitions` SET `source_id` = 5 WHERE `other_sources` LIKE '(5)';
+UPDATE `definitions` SET `source_id` = 7 WHERE `other_sources` LIKE '(7)';
+UPDATE `definitions` SET `source_id` = 8 WHERE `other_sources` LIKE '(8)';
+UPDATE `definitions` SET `source_id` = 9 WHERE `other_sources` LIKE '(9)';
+UPDATE `definitions` SET `source_id` = 10 WHERE `other_sources` LIKE '(10)';
+UPDATE `definitions` SET `source_id` = 11 WHERE `other_sources` LIKE '(11)';
+UPDATE `definitions` SET `source_id` = 12 WHERE `other_sources` LIKE '(12)';
+UPDATE `definitions` SET `source_id` = 25 WHERE `other_sources` LIKE '(25)';
+UPDATE `definitions` SET `source_id` = 28 WHERE `other_sources` LIKE '(28)';
+UPDATE `definitions` SET `source_id` = 28 WHERE `other_sources` LIKE '28';
+UPDATE `definitions` SET `attributedTo` = 'Evan Esar' WHERE source_id = 28 AND attributedTo LIKE 'unknown';
+UPDATE `definitions` SET `source_id` = 29 WHERE `other_sources` LIKE '(29)';
+UPDATE `definitions` SET `source_id` = 30 WHERE `other_sources` LIKE '(30)';
+UPDATE `definitions` SET `source_id` = 35 WHERE `other_sources` LIKE '(35)';
+UPDATE `definitions` SET `source_id` = 35 WHERE `other_sources` LIKE '35';
+UPDATE `definitions` SET `source_id` = 36 WHERE `other_sources` LIKE '(36)';
+UPDATE `definitions` SET `source_id` = 37 WHERE `other_sources` LIKE '(37)';
+UPDATE `definitions` SET `source_id` = 40 WHERE `other_sources` LIKE '(40)';
+UPDATE `definitions` SET `source_id` = 41 WHERE `other_sources` LIKE '(41)';
+UPDATE `definitions` SET `source_id` = 100 WHERE `other_sources` LIKE '(?)';
+UPDATE `definitions` SET `source_id` = 69 WHERE `attributedTo` LIKE 'James B. Applegate, Jr.';
+
+
+--
+--
+--
+
+INSERT INTO `definitionSources` (`definitionId`, `sourceId`, `details`, `attributedTo`, `citedSource`, `isPrimary`, `createdAt`, `updatedAt`) VALUES ('2110', '40', '', 'Elbert Hubbard', NULL, '0', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 

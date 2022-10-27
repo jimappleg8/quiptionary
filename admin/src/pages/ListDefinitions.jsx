@@ -9,7 +9,7 @@ const ListDefinitions = () => {
   });
   
   const onSearch = async(text) => {
-    const results = await api.search(encodeURIComponent(text));
+    const results = await api.searchDef(encodeURIComponent(text));
     setState(prevState => {
       return{...prevState, results: results};
     })

@@ -1,7 +1,9 @@
-const { Op } = require("sequelize");
-const db = require("../models");
+const { Op } = require('sequelize');
+const db = require('../models');
 const Definition = db.definition;
-const DefinitionIndex = db.definition_index;
+const DefinitionIndex = db.definitionIndex;
+//const DefinitionSource = db.definitionSource;
+const Source = db.source;
 const searchIndexing = require('./search-indexing');
 
 // -----------------------------------------------------
@@ -18,23 +20,21 @@ createDefinition = async (req, res) => {
 
   // Create a definition object
   const definition = {
-    entry_word: body.entry_word,
-    part_of_speech: body.part_of_speech,
+    entryWord: body.entryWord,
+    partOfSpeech: body.partOfSpeech,
     plural: body.plural ? body.plural : 0,
     definition: body.definition,
-    original_quote: body.original_quote,
-    author: body.author,
-    verified: body.verified ? body.verified : 0,
+    originalQuote: body.originalQuote,
+    attributedTo: body.attributedTo,
     source_id: body.source_id,
     source_date: body.source_date,
     source_description: body.source_description,
     other_sources: body.other_sources,
-    definition_type: body.definition_type,
+    definitionType: body.definitionType,
     keywords: body.keywords,
     categories: body.categories,
     source : body.source,
     context: body.context,
-    sort: body.sort,
     game: body.game ? body.game : 'N',
   };
 
@@ -56,31 +56,35 @@ createDefinition = async (req, res) => {
 
 updateDefinition = async (req, res) => {
   const id = req.params.id;
+  const body = req.body
   
-  await Definition.update(req.body, {
-    where: { id: id }
-  })
-    .then(num => {
-      if (num != 1) {
-        res.send({
-          message: `Cannot update definition with id=${id}. Maybe definition was not found or req.body is empty!`
-        });
-      }
+  if (!body) {
+    return res.status(400).send({
+      message: `Cannot update definition with id=${id}. The request body is empty.`
+    });
+  }
+  
+  let definition = await Definition.findByPk(id);
+  if (definition === null) {
+    return res.status(404).send({
+        message: `Definition with id=${id} was not found.`
+      });
+  };
+  
+  definition.set(req.body);
+  
+  updateSearchIndex(definition.dataValues);
+  
+  definition = await definition.save()
+    .then(data => {
+      res.status(200)
+        .send(data);
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating definition with id=" + id
+        message: err + ` Error updating definition with id=${id}.`
       });
     });
-    
-  const results = req.body;
-  results.id = id;
-  //console.log(results);
-  updateSearchIndex(results);
-    
-  res.send({
-    message: "Definition was updated successfully."
-  });
 };
 
 // -----------------------------------------------------
@@ -131,7 +135,9 @@ getDefinitions = async (req, res) => {
 getDefinitionById = async (req, res) => {
   const id = req.params.id;
 
-  await Definition.findByPk(id)
+  await Definition.findByPk(id, {
+    include: Source
+  })
     .then(data => {
       if (data) {
         res.send(data);
@@ -167,7 +173,7 @@ searchDefinitions = async (req, res) => {
     
     await Definition.findAll({
       attributes: [
-        'id', 'entry_word', 'part_of_speech', 'plural', 'definition', 'author'
+        'id', 'entryWord', 'partOfSpeech', 'plural', 'definition', 'attributedTo'
       ],
       include: {
         model: DefinitionIndex,
@@ -183,7 +189,7 @@ searchDefinitions = async (req, res) => {
       const matches = [];
       const related = [];
       data.map((row) => {
-        if (row.dataValues.entry_word === words) {
+        if (row.dataValues.entryWord === words) {
           matches.push(row);
         }
         else {
@@ -232,12 +238,12 @@ updateSearchIndex = async (defn) => {
 
   // first, delete the old index records if they exist
   await DefinitionIndex.destroy({
-    where: { definition_id: defn.id }
+    where: { definitionId: defn.id }
   })
 
   // gather and stem the relevant words from three fields
   const words = searchIndexing.stemWords(
-    searchIndexing.phraseToArray(defn.entry_word)
+    searchIndexing.phraseToArray(defn.entryWord)
   );
   const cleanDef = searchIndexing.stemWords(
     searchIndexing.removeStopWords(
@@ -254,12 +260,12 @@ updateSearchIndex = async (defn) => {
   
   for (const stemWord of uniqueStems) {
     // Create a definition object
-    const definition_index = {
-      definition_id: defn.id,
+    const definitionIndex = {
+      definitionId: defn.id,
       word: stemWord,
     }
     // save the definition_index record
-    await DefinitionIndex.create(definition_index)
+    await DefinitionIndex.create(definitionIndex)
     .catch(err => {
       console.log(err.message || "Some error occurred while creating the definition index.");
     });
@@ -271,7 +277,7 @@ updateSearchIndex = async (defn) => {
 deleteSearchIndex = async (id) => {
 
   await DefinitionIndex.destroy({
-    where: { definition_id: id }
+    where: { definitionId: id }
   })
     .catch(err => {
       console.log(err.message || "Some error occurred while deleting the definition index.");

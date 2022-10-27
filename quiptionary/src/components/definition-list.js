@@ -12,7 +12,7 @@ const DefinitionList = ({ results }) => {
     matches = results.data.matches || [];
     related = results.data.related || [];
     related = related.sort((a, b) => {
-      return a.entry_word.localeCompare(b.entry_word, undefined, {sensitivity: 'base'});
+      return a.entryWord.localeCompare(b.entryWord, undefined, {sensitivity: 'base'});
     });
   }
   //console.log(matches)

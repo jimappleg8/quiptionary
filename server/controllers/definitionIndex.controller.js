@@ -1,5 +1,5 @@
 const db = require("../models");
-const DefinitionIndex = db.definition_index;
+const DefinitionIndex = db.definitionIndex;
 
 // -----------------------------------------------------
 
@@ -14,13 +14,13 @@ createDefinitionIndex = async (req, res) => {
   }
 
   // Create a definition object
-  const definition_index = {
-    definition_id: body.definition_id,
+  const definitionIndex = {
+    definitionId: body.definitionId,
     word: body.word
   };
 
   // save to the database
-  await DefinitionIndex.create(definition_index)
+  await DefinitionIndex.create(definitionIndex)
     .then(data => {
       res.send(data);
     })
@@ -64,7 +64,7 @@ deleteDefinitionIndex = async (req, res) => {
   const id = Number(req.params.id);
 
   await DefinitionIndex.destroy({
-    where: { definition_id: id }
+    where: { definitionId: id }
   })
     .then(num => {
       if (num >= 1) {
@@ -87,24 +87,24 @@ deleteDefinitionIndex = async (req, res) => {
 // -----------------------------------------------------
 
 getDefinitionIndexByDefinitionId = async (req, res) => {
-  const definition_id = req.params.id;
+  const definitionId = req.params.id;
 
   await DefinitionIndex.findAll({ 
     where: {
-      definition_id: definition_id
+      definitionId: definitionId
     }})
     .then(data => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find definition index with definition_id=${id}.`
+          message: `Cannot find definition index with definitionId=${id}.`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving definition index with definition_id=" + id
+        message: "Error retrieving definition index with definitionId=" + id
       });
     });
 };

@@ -7,7 +7,7 @@ const Matches = (props) => {
   
   return (
     <div>
-      <dd><strong>{count + 1}.</strong>&nbsp;&nbsp;<i>{plural}{definition.part_of_speech}</i>&nbsp;&nbsp;{definition.definition} <i>&mdash;{definition.author}</i></dd>
+      <dd><strong>{count + 1}.</strong>&nbsp;&nbsp;<i>{plural}{definition.partOfSpeech}</i>&nbsp;&nbsp;{definition.definition} <i>&mdash;{definition.attributedTo}</i></dd>
     </div>
   )
 }

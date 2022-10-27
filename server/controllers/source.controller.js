@@ -1,4 +1,3 @@
-const { Sequelize, Op } = require("sequelize");
 const db = require("../models");
 const Source = db.source;
 
@@ -16,12 +15,11 @@ createSource = async (req, res) => {
 
   // Create a definition object
   const source = {
-    verified: body.verified ? body.verified : 0,
-    source_date: body.source_date,
     description: body.description,
-    citation: body.citation,
     author: body.author,
-    source : body.source
+    publishedDate: body.publishedDate,
+    citation: body.citation,
+    notes : body.notes
   };
 
   // save to the database
@@ -41,24 +39,31 @@ createSource = async (req, res) => {
 
 updateSource = async (req, res) => {
   const id = req.params.id;
+  const body = req.body
   
-  await Source.update(req.body, {
-    where: { id: id }
-  })
-    .then(num => {
-      if (num != 1) {
-        res.send({
-          message: `Cannot update source with id=${id}. Maybe source was not found or req.body is empty!`
-        });
-      } else {
-        res.send({
-          message: "Source was updated successfully."
-        });
-      }
+  if (!body) {
+    return res.status(400).send({
+      message: `Cannot update source with id=${id}. The request body is empty.`
+    });
+  }
+  
+  let source = await Source.findByPk(id);
+  if (source === null) {
+    return res.status(404).send({
+        message: `Source with id=${id} was not found.`
+      });
+  };
+  
+  source.set(req.body);
+  
+  source = await source.save()
+    .then(data => {
+      res.status(200)
+        .send(data);
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating source with id=" + id
+        message: err + ` Error updating source with id=${id}.`
       });
     });
 };

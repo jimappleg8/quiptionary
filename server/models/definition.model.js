@@ -1,12 +1,12 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize, Sequelize) => {
   const Definition = sequelize.define("definition", {
-    entry_word: {
+    entryWord: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    part_of_speech: {
+    partOfSpeech: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -19,18 +19,13 @@ module.exports = (sequelize, Sequelize) => {
       type: DataTypes.TEXT,
       allowNull: false
     },
-    original_quote: {
+    originalQuote: {
       type: DataTypes.TEXT,
       allowNull: false
     },
-    author: {
+    attributedTo: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-    verified: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: 0
     },
     source_id: {
       type: DataTypes.STRING,
@@ -48,7 +43,7 @@ module.exports = (sequelize, Sequelize) => {
       type: DataTypes.STRING,
       allowNull: true
     },
-    definition_type: {
+    definitionType: {
       type: DataTypes.STRING,
       allowNull: true
     },
@@ -65,10 +60,6 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: true
     },
     context: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
-    sort: {
       type: DataTypes.STRING,
       allowNull: true
     },

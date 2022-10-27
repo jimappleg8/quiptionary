@@ -2,10 +2,9 @@ POST http://localhost:8080/api/sources
 Content-Type: application/json
 
 {
-    "verified": false,
-    "source_date": "20321003",
     "description": "",
-    "citation": "Applegate, Jesse. The Wise Words of JM Applegate. MIT Press, 2032.",
     "author": "Jesse Applegate",
-    "source": ""
+    "publishedDate": "20321003",
+    "citation": "Applegate, Jesse. <i>The Wise Words of JM Applegate.</i> MIT Press, 2032.",
+    "notes": "This was actually told to me by Jesse directly."
 }
