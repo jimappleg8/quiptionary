@@ -20,13 +20,15 @@ const SearchBar = (props) => {
   
   return (
     <Container>
-          <Form.Control 
-            type="text" 
-            className="input is-medium"
-            onChange={handleInput}
-            onKeyPress={handleEnterKeyPressed}
-            value={searchText}
-            placeholder="Enter a word" />
+      <Form.Control 
+        type="text" 
+        className="input is-medium"
+        onChange={handleInput}
+        onKeyPress={handleEnterKeyPressed}
+        value={searchText}
+        autoFocus={true}
+        placeholder="Enter a word"
+      />
     </Container>
   )
 }

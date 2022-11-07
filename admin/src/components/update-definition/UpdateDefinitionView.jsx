@@ -3,7 +3,11 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 
-const UpdateDefinitionView = ({ definition, handleInputChange, handleUpdateDefinition }) => {
+const UpdateDefinitionView = (props) => {
+  
+  const definition = props.definition;
+  const handleInputChange = props.handleInputChange;
+  const handleUpdateDefinition = props.handleUpdateDefinition;
   
   return (
     <div>

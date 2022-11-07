@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { NavBar } from './components';
 import { ListDefinitions, CreateDefinition } from './pages';
-import UpdateDefinitionApi from './pages/update-definition/UpdateDefinitionApi';
+import { UpdateDefinition } from './pages';
+import { SourceSorter } from './pages';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -15,7 +16,8 @@ function App() {
         <Route path="/" element={<ListDefinitions/>} />
         <Route path="/definitions/list" element={<ListDefinitions/>} />
         <Route path="/definitions/create" element={<CreateDefinition/>} />
-        <Route path="/definitions/update/:id" exact element={<UpdateDefinitionApi/>} />
+        <Route path="/definitions/update/:id" exact element={<UpdateDefinition/>} />
+        <Route path="/source-sorter" exact element={<SourceSorter/>} />
       </Routes>
     </Router>
   );

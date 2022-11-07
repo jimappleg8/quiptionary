@@ -1,32 +1,28 @@
 import React from 'react'
+import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import Modal from 'react-bootstrap/Modal'
 
-const UpdateDefSrcView = ({ source, defSource, handleSourceInputChange, handleDefSrcInputChange, handleUpdateSource }) => {
+const UpdateDefSrcView = (props) => {
   
-  const handleEditSource = (sourceId, toggle) => {
-    if (toggle === 'form') {
-      document.getElementById('displaySource-' + sourceId).style.display = 'none';
-      document.getElementById('displayForm-' + sourceId).style.display = 'block';
-    } else {
-      document.getElementById('displaySource-' + sourceId).style.display = 'block';
-      document.getElementById('displayForm-' + sourceId).style.display = 'none';      
-    }
-  }
+  const source = props.source;
+  const defSource = props.defSource;
+  const handleSourcesInputChange = props.handleSourcesInputChange;
+  const handleDefSrcInputChange = props.handleDefSrcInputChange;
+  const handleUpdateSource = props.handleUpdateSource;
+  const handleUnlinkSource = props.handleUnlinkSource;
+  const handleModalOpenClose = props.handleModalOpenClose;
   
-  const handleClose = (sourceId) => {
-    document.getElementById('displayModal-' + sourceId).style.display = 'none'; 
-  }
+  const srcDate = (source.publishedDate != '') ? ' ' + source.publishedDate + '.' : '';
+  const alsoCites = (defSource.citedSource != '') ? '<br>&nbsp;<br><b>Which cites:</b> ' + defSource.citedSource : '';
+  const header = source.description + ' (' + source.id + ')<br>' + source.author + '.' + srcDate + alsoCites;
   
-  const handleOpen = (sourceId) => {
-    document.getElementById('displayModal-' + sourceId).style.display = '';
-  }
-
   return (
-    <div>
-      <hr/>
+    <Accordion.Item eventKey="{source.id}" className="mt-2">
+      <Accordion.Header><span dangerouslySetInnerHTML={{__html: header}}></span></Accordion.Header>
+      <Accordion.Body>
       <div id={'displaySource-' + source.id} style={{display: "block"}}>
         <Table striped bordered size="sm">
           <tbody>
@@ -48,7 +44,7 @@ const UpdateDefSrcView = ({ source, defSource, handleSourceInputChange, handleDe
               </tr>
               <tr>
                 <th>Citation:</th>
-                <td>{source.citation}</td>
+                <td><span dangerouslySetInnerHTML={{__html: source.citation}}></span></td>
               </tr>
               <tr>
                 <th>Notes:</th>
@@ -69,7 +65,7 @@ const UpdateDefSrcView = ({ source, defSource, handleSourceInputChange, handleDe
               </tr>
               <tr>
                 <th>Cited Source:</th>
-                <td>{defSource.citedSource}</td>
+                <td><span dangerouslySetInnerHTML={{__html: defSource.citedSource}}></span></td>
               </tr>
               <tr>
                 <th>Is Primary:</th>
@@ -79,14 +75,21 @@ const UpdateDefSrcView = ({ source, defSource, handleSourceInputChange, handleDe
         </Table>
         <Button
           variant="success"
-          data-bs-toggle="modal"
-          data-bs-target={'#displayModal-' + source.id}
+          onClick={() => handleModalOpenClose(source.id, true)}
         >
           Edit
         </Button>
-       </div>
+        &nbsp;
+        <Button
+          variant="danger"
+          onClick={() => handleUnlinkSource(source.id)}
+        >
+          Unlink
+        </Button>
+      </div>
+      </Accordion.Body>
 
-      <Modal id={'displayModal-' + source.id} show="{true}" onHide="">
+      <Modal id={'displayModal-' + source.id} show={source.modal} onHide={() => handleModalOpenClose(source.id, false)}>
         <Modal.Header closebutton="true">
           <Modal.Title>Edit Source</Modal.Title>
         </Modal.Header>
@@ -98,7 +101,7 @@ const UpdateDefSrcView = ({ source, defSource, handleSourceInputChange, handleDe
                 type="text"
                 name="description"
                 value={source.description}
-                onChange={(e) => handleSourceInputChange(source.id, e)}
+                onChange={(e) => handleSourcesInputChange(source.id, e)}
               />
             </Form.Group>
             
@@ -108,7 +111,7 @@ const UpdateDefSrcView = ({ source, defSource, handleSourceInputChange, handleDe
                 type="text"
                 name="author"
                 value={source.author}
-                onChange={(e) => handleSourceInputChange(source.id, e)}
+                onChange={(e) => handleSourcesInputChange(source.id, e)}
               />
             </Form.Group>
             
@@ -118,27 +121,27 @@ const UpdateDefSrcView = ({ source, defSource, handleSourceInputChange, handleDe
                 type="text"
                 name="publishedDate"
                 value={source.publishedDate}
-                onChange={(e) => handleSourceInputChange(source.id, e)}
+                onChange={(e) => handleSourcesInputChange(source.id, e)}
               />
             </Form.Group>
             
             <Form.Group className="mb-3" controlId="sourceCitation">
               <Form.Label>Citation</Form.Label>
               <Form.Control
-                type="text"
+                as="textarea"
                 name="citation"
                 value={source.citation}
-                onChange={(e) => handleSourceInputChange(source.id, e)}
+                onChange={(e) => handleSourcesInputChange(source.id, e)}
               />
             </Form.Group>
             
             <Form.Group className="mb-3" controlId="sourceNotes">
               <Form.Label>Notes</Form.Label>
               <Form.Control
-                type="text"
+                as="textarea"
                 name="notes"
                 value={source.notes}
-                onChange={(e) => handleSourceInputChange(source.id, e)}
+                onChange={(e) => handleSourcesInputChange(source.id, e)}
               />
             </Form.Group>
             
@@ -147,7 +150,7 @@ const UpdateDefSrcView = ({ source, defSource, handleSourceInputChange, handleDe
             <Form.Group className="mb-3" controlId="defSrcDetails">
               <Form.Label>Details</Form.Label>
               <Form.Control
-                type="text"
+                as="textarea"
                 name="details"
                 value={defSource.details}
                 onChange={(e) => handleDefSrcInputChange(source.id, e)}
@@ -167,7 +170,7 @@ const UpdateDefSrcView = ({ source, defSource, handleSourceInputChange, handleDe
             <Form.Group className="mb-3" controlId="defSrcCitedSource">
               <Form.Label>Cited Source</Form.Label>
               <Form.Control
-                type="text"
+                as="textarea"
                 name="citedSource"
                 value={defSource.citedSource}
                 onChange={(e) => handleDefSrcInputChange(source.id, e)}
@@ -187,23 +190,22 @@ const UpdateDefSrcView = ({ source, defSource, handleSourceInputChange, handleDe
         </Modal.Body>
         <Modal.Footer>
           <Button
-              variant="success"
-              onClick={() => handleUpdateSource(source.id)}
-            >
-              Save
-            </Button>
-            &nbsp;
-            <Button
-              variant="warning"
-              data-bs-dismiss="modal"
-              data-bs-target={'#displayModal-' + source.id}
-            >
-              Cancel
-            </Button>
+            variant="success"
+            onClick={() => handleUpdateSource(source.id)}
+          >
+            Save
+          </Button>
+          &nbsp;
+          <Button
+            variant="warning"
+            onClick={() => handleModalOpenClose(source.id, false)}
+          >
+            Cancel
+          </Button>
         </Modal.Footer>
       </Modal>
 
-    </div>
+    </Accordion.Item>
   );
 }
 

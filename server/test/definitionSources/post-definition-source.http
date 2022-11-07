@@ -1,0 +1,11 @@
+POST http://localhost:8080/api/definition-source
+Content-Type: application/json
+
+{
+    "definitionId": 291,
+    "sourceId": 37,
+    "details": "",
+    "attributedTo": "",
+    "citedSource": "",
+    "isPrimary": 0
+}

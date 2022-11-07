@@ -38,7 +38,6 @@ const DefinitionInsert = () => {
   };
   
 
-
   const saveDefinition = async () => {
     const payload = {
       entryWord: definition.entryWord,
@@ -62,6 +61,7 @@ const DefinitionInsert = () => {
     await api.insertDef(payload)
       .then(response => {
         setDefinition({
+          id: response.data.id,
           entryWord: response.data.entryWord,
           partOfSpeech: response.data.partOfSpeech,
           plural: response.data.plural,

@@ -33,35 +33,35 @@ module.exports = (sequelize, Sequelize) => {
     },
     source_date: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: false
     },
     source_description: {
       type: DataTypes.TEXT,
-      allowNull: true
+      allowNull: false
     },
     other_sources: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: false
     },
     definitionType: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: false
     },
     keywords: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: false
     },
     categories: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: false
     },
     source : {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: false
     },
     context: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: false
     },
     game: {
       type: DataTypes.STRING,

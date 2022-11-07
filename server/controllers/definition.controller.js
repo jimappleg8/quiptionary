@@ -109,6 +109,7 @@ deleteDefinition = async (req, res) => {
     });
     
   deleteSearchIndex(id);
+  // deleteDefinitionSources(id);
     
   res.send({
     message: "Definition was deleted successfully!"
@@ -126,6 +127,27 @@ getDefinitions = async (req, res) => {
       res.status(500).send({
         message:
           err.message || "Some error occurred while retrieving definitions."
+      });
+    });
+};
+
+// -----------------------------------------------------
+
+getOneDefinition = async (req, res) => {
+  await Definition.findOne({
+      where: {
+        source_description: {
+          [Op.ne]: ''
+        }
+      }
+    })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving definition."
       });
     });
 };
@@ -167,7 +189,8 @@ searchDefinitions = async (req, res) => {
     const sqlWords = [];
     for (let i = 0; i < stemWords.length; i++) {
       sqlWords.push({
-        [Op.eq]: stemWords[i]
+        // "like" allows for capitalized words to be found
+        [Op.like]: stemWords[i]
       })
     }
     
@@ -189,7 +212,7 @@ searchDefinitions = async (req, res) => {
       const matches = [];
       const related = [];
       data.map((row) => {
-        if (row.dataValues.entryWord === words) {
+        if (row.dataValues.entryWord.toLowerCase() === words.toLowerCase()) {
           matches.push(row);
         }
         else {
@@ -291,6 +314,7 @@ module.exports = {
   updateDefinition,
   deleteDefinition,
   getDefinitions,
+  getOneDefinition,
   getDefinitionById,
   searchDefinitions,
   indexDefinitions

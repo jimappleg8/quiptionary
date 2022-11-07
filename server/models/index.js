@@ -37,6 +37,7 @@ db.definitionSource = db.sequelize.define("definitionSource", {
   },
   sourceId: {
     type: DataTypes.INTEGER,
+    allowNull: false,
     references: {
       model: db.source,
       key: 'id'
@@ -44,15 +45,15 @@ db.definitionSource = db.sequelize.define("definitionSource", {
   },
   details: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: false
   },
   attributedTo: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: false
   },
   citedSource: {
     type: DataTypes.TEXT,
-    allowNull: true
+    allowNull: false
   },
   isPrimary: {
     type: DataTypes.BOOLEAN,

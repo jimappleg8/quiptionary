@@ -12,6 +12,7 @@ const NavBar = () => {
             <Nav>
               <Nav.Link href="/definitions/list">List Definitions</Nav.Link>
               <Nav.Link href="/definitions/create">Create Definition</Nav.Link>
+              <Nav.Link href="/source-sorter">Source Sorter</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

@@ -4,6 +4,41 @@ const DefinitionSource = db.definitionSource;
 
 // -----------------------------------------------------
 
+createDefinitionSource = async (req, res) => {
+  const body = req.body
+
+  if (!body) {
+    return res.status(400).json({
+      success: false,
+      error: 'You must provide a valid definition source record.',
+    })
+  }
+
+  // Create a definition object
+  const defSource = {
+    definitionId: body.definitionId,
+    sourceId: body.sourceId,
+    details: body.details,
+    attributedTo: body.attributedTo,
+    citedSource: body.citedSource,
+    isPrimary: body.isPrimary,
+  };
+
+  // save to the database
+  await DefinitionSource.create(defSource)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the definition source."
+      });
+    });
+};
+
+// -----------------------------------------------------
+
 updateDefinitionSource = async (req, res) => {
   const definitionId = req.params.definitionId;
   const sourceId = req.params.sourceId;
@@ -43,6 +78,36 @@ updateDefinitionSource = async (req, res) => {
 
 // -----------------------------------------------------
 
+deleteDefinitionSource = async (req, res) => {
+  const definitionId = req.params.definitionId;
+  const sourceId = req.params.sourceId;
+
+  await DefinitionSource.destroy({
+    where: { 
+      definitionId: definitionId,
+      sourceId: sourceId
+    }
+  })
+  .then(num => {
+    if (num != 1) {
+      res.send({
+        message: `Cannot delete definition source with definitionId/sourceId=${definitionId}/${sourceId}. Maybe source was not found!`
+      });
+    } else {
+      res.send({
+        message: `Definition source was deleted successfully!`
+      });
+    }
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: `Could not delete definition source with definitionId/sourceId=${definitionId}/${sourceId} (${err})`
+    });
+  });
+};
+
+// -----------------------------------------------------
+
 // This is a temporary function and should be removed once the dictionarySource table is stable.
 
 buildDefinitionSources = async (req, res) => {
@@ -75,6 +140,8 @@ buildDefinitionSources = async (req, res) => {
 // -----------------------------------------------------
 
 module.exports = {
+  createDefinitionSource,
   updateDefinitionSource,
+  deleteDefinitionSource,
   buildDefinitionSources
 };

@@ -1,9 +1,11 @@
 import ListDefinitions from './ListDefinitions'
 import CreateDefinition from './CreateDefinition'
-import UpdateDefinitionApi from './update-definition/UpdateDefinitionApi'
+import UpdateDefinition from './UpdateDefinition'
+import SourceSorter from './SourceSorter'
 
 export { 
   ListDefinitions, 
   CreateDefinition, 
-  UpdateDefinitionApi
+  UpdateDefinition,
+  SourceSorter
 }

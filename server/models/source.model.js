@@ -20,7 +20,7 @@ module.exports = (sequelize, Sequelize) => {
     },
     notes: {
       type: DataTypes.TEXT,
-      allowNull: true,
+      allowNull: false,
     },
   });
 

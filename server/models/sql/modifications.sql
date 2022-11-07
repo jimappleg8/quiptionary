@@ -132,5 +132,43 @@ UPDATE `definitions` SET `source_id` = 69 WHERE `attributedTo` LIKE 'James B. Ap
 
 INSERT INTO `definitionSources` (`definitionId`, `sourceId`, `details`, `attributedTo`, `citedSource`, `isPrimary`, `createdAt`, `updatedAt`) VALUES ('2110', '40', '', 'Elbert Hubbard', NULL, '0', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
+--
+--
+--
+
+SELECT * FROM `definitions` WHERE `other_sources` <> '';
+SELECT * FROM `definitions` WHERE `source_description` <> '';
+
+UPDATE `definitions` SET `other_sources` = '' WHERE `source_id` LIKE '9' AND `other_sources` LIKE '(9)';
+UPDATE `definitions` SET `other_sources` = '' WHERE `source_id` LIKE '28' AND `other_sources` LIKE '(28)';
+UPDATE `definitions` SET `other_sources` = '' WHERE `source_id` LIKE '29' AND `other_sources` LIKE '(29)';
+UPDATE `definitions` SET `other_sources` = '' WHERE `source_id` LIKE '37' AND `other_sources` LIKE '(37)';
+UPDATE `definitions` SET `other_sources` = '' WHERE `source_id` LIKE '40' AND `other_sources` LIKE '(40)';
+UPDATE `definitions` SET `other_sources` = '' WHERE `source_id` LIKE '36' AND `other_sources` LIKE '(36)';
+UPDATE `definitions` SET `other_sources` = '' WHERE `source_id` LIKE '2' AND `other_sources` LIKE '(2)';
+UPDATE `definitions` SET `other_sources` = '' WHERE `source_id` LIKE '7' AND `other_sources` LIKE '(7)';
+UPDATE `definitions` SET `other_sources` = '' WHERE `source_id` LIKE '8' AND `other_sources` LIKE '(8)';
+UPDATE `definitions` SET `other_sources` = '' WHERE `source_id` LIKE '25' AND `other_sources` LIKE '(25)';
+UPDATE `definitions` SET `other_sources` = '' WHERE `source_id` LIKE '35' AND `other_sources` LIKE '(35)';
+UPDATE `definitions` SET `other_sources` = '' WHERE `source_id` LIKE '5' AND `other_sources` LIKE '(5)';
+UPDATE `definitions` SET `other_sources` = '' WHERE `source_id` LIKE '30' AND `other_sources` LIKE '(30)';
+UPDATE `definitions` SET `other_sources` = '' WHERE `source_id` LIKE '41' AND `other_sources` LIKE '(41)';
+UPDATE `definitions` SET `other_sources` = '' WHERE `source_id` LIKE '28' AND `other_sources` LIKE '28';
+UPDATE `definitions` SET `other_sources` = '' WHERE `source_id` LIKE '12' AND `other_sources` LIKE '(12)';
+UPDATE `definitions` SET `other_sources` = '' WHERE `source_id` LIKE '10' AND `other_sources` LIKE '(10)';
+UPDATE `definitions` SET `other_sources` = '' WHERE `source_id` LIKE '11' AND `other_sources` LIKE '(11)';
+
+
+UPDATE definitions SET source_date = '', source_description = '' WHERE source_id = '3' AND source_date = "19110000" AND source_description = "The Devil's Dictionary"
+
+UPDATE definitions SET source_date = '', source_description = '' WHERE source_id = '35' AND source_date = "19850000" AND source_description = "The Nuclear Devil's Dictionary"
+
+UPDATE definitions SET source_description = '' WHERE source_id = '37' AND source_description = "Webster's Unafraid Dictionary";
+UPDATE definitions SET source_description = '' WHERE source_id = '42' AND source_description = "The Dictionary According to Mommy";
+UPDATE definitions SET source_description = '' WHERE source_id = '16' AND source_description = "A Child's Garden of Misinformation";
+
+
+
+
 
 
