@@ -1,8 +1,8 @@
 module.exports = {
-  HOST: "localhost",
-  USER: "root",
-  PASSWORD: "root",
-  DB: "lexicon_test",
+  HOST: "35.193.95.241",
+  USER: "quipUser",
+  PASSWORD: "B,b:*@Iq[a<?N1Q*",
+  DB: "quiptionary",
   dialect: "mysql",
   pool: {
     max: 5,
