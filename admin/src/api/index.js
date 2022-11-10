@@ -2,6 +2,7 @@ import axios from 'axios'
 
 const api = axios.create({
     baseURL: 'http://localhost:8080/api'
+    //baseURL: 'https://quiptionary-api.wl.r.appspot.com/api'
 })
 
 export const searchDef = words => api.get(`/definitions/search/${words}`);

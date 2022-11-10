@@ -1,7 +1,7 @@
 module.exports = {
-  HOST: "35.193.95.241",
+  HOST: "/cloudsql/quiptionary-api:us-central1:quiptionary-mysql", // "35.193.95.241",
   USER: "quipUser",
-  PASSWORD: "B,b:*@Iq[a<?N1Q*",
+  PASSWORD: "kl33nex",
   DB: "quiptionary",
   dialect: "mysql",
   pool: {
