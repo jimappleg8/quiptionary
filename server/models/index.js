@@ -1,12 +1,15 @@
 const dbConfig = require('../config/db.config.js');
 const { Sequelize, DataTypes } = require('sequelize');
 
+// this allows for using a socket on the production server
+dOptions = (process.env.NODE_ENV === 'production')
+? { socketPath: dbConfig.HOST }
+: {};
+
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
-  dialectOptions: {
-    socketPath: dbConfig.HOST
-  },
+  dialectOptions: dOptions,
   operatorsAliases: 0,
   pool: {
     max: dbConfig.pool.max,

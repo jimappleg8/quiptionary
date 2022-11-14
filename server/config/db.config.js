@@ -1,8 +1,8 @@
 module.exports = {
-  HOST: "/cloudsql/quiptionary-api:us-central1:quiptionary-mysql", // "35.193.95.241",
-  USER: "quipUser",
-  PASSWORD: "kl33nex",
-  DB: "quiptionary",
+  HOST: process.env.DB_HOST,
+  USER: process.env.DB_USER,
+  PASSWORD: process.env.DB_PASSWORD,
+  DB: process.env.DB_DATABASE,
   dialect: "mysql",
   pool: {
     max: 5,
